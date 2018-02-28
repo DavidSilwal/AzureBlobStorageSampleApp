@@ -31,7 +31,7 @@ namespace AzureBlobStorageSampleApp.Backend.Common
         public static async Task<PhotoModel> SavePhoto(byte[] photo, string photoTitle)
         {
             var blockBlob = BlobContainer.GetBlockBlobReference(photoTitle);
-            await blockBlob.UploadFromByteArrayAsync(photo, 0, photo.Length);
+            await blockBlob.UploadFromByteArrayAsync(photo, 0, photo.Length).ConfigureAwait(false);
 
             return new PhotoModel { Title = photoTitle, Url = blockBlob.Uri.ToString() };
         }

@@ -99,7 +99,7 @@ namespace AzureBlobStorageSampleApp.Backend.Common
 
                 try
                 {
-                    return databaseFunction?.Invoke(dbContext) ?? default(TResult);
+                    return databaseFunction?.Invoke(dbContext) ?? default;
                 }
                 catch (Exception e)
                 {
@@ -108,7 +108,7 @@ namespace AzureBlobStorageSampleApp.Backend.Common
                     Debug.WriteLine(e.ToString());
                     Debug.WriteLine("");
 
-                    return default(TResult);
+                    return default;
                 }
                 finally
                 {

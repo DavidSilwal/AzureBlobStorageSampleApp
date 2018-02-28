@@ -12,20 +12,20 @@ using AzureBlobStorageSampleApp.Backend.Common;
 
 namespace AzureBlobStorageSampleApp.Functions
 {
-    public static class PostBlobFunction
+    public static class PostBlob
     {
         #region Methods
-        [FunctionName("PostBlob")]
+        [FunctionName(nameof(PostBlob))]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "PostBlob/{title}")]HttpRequestMessage req, string title, TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
 
             try
             {
-                var imageBlob = await JsonService.DeserializeMessage<PhotoBlobModel>(req);
-                var photo = await BlobStorageService.SavePhoto(imageBlob.Image, title);
+                var imageBlob = await JsonService.DeserializeMessage<PhotoBlobModel>(req).ConfigureAwait(false);
+                var photo = await BlobStorageService.SavePhoto(imageBlob.Image, title).ConfigureAwait(false);
 
-                await PhotoDatabaseService.InsertPhoto(photo);
+                await PhotoDatabaseService.InsertPhoto(photo).ConfigureAwait(false);
 
                 return req.CreateResponse(HttpStatusCode.Created, photo);
             }
